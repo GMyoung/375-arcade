@@ -22,7 +22,7 @@ public class LittleBoss2 extends GameObj{
 	public LittleBoss2(int x, int y) {
 		super(x, y);
 	}
-
+// some other nasty code
 	@Override
 	public void paintSelf(Graphics g) {
 		super.paintSelf(g);
