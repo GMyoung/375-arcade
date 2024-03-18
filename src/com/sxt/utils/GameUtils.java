@@ -25,6 +25,14 @@ public class GameUtils {
 	// Load enemy big plane bullet image
 	public static Image enemy2BulletImg = Toolkit.getDefaultToolkit().getImage("imgs/enemy2bullet.png");
 
+
+	public static Image littleboss1Img= Toolkit.getDefaultToolkit().getImage("imgs/littleboss1.png");
+	public static Image littleboss2Img= Toolkit.getDefaultToolkit().getImage("imgs/littleboss2.png");
+	public static Image littleBoss1BulletImg= Toolkit.getDefaultToolkit().getImage("imgs/littleboss1bullet.png");
+	public static Image littleBoss2BulletImg= Toolkit.getDefaultToolkit().getImage("imgs/littleboss2bullet.png");
+	public static Image giftImg= Toolkit.getDefaultToolkit().getImage("imgs/gift.png");
+
+
 	// Create a collection for our plane bullets
 	public static List<ShellObj> shellObjList = new ArrayList<>();
 	// Create a collection for enemy small planes
@@ -37,6 +45,16 @@ public class GameUtils {
 	public static List<Enemy2BulletObj> enemy2BulletObjList = new ArrayList<>();
 	// Collection to remove elements from the game window
 	public static List<GameObj> removeList = new ArrayList<>();
+
+
+
+
+	public static List<LittleBoss1Bullet> littleBoss1BulletList=new ArrayList<>();
+
+	public static List<LittleBoss2Bullet> littleBoss2BulletList=new ArrayList<>();
+
 	// Collection for explosions
 	public static List<ExplodeObj> explodeObjList = new ArrayList<>();
+
+	public static List<GiftObj> giftObjList=new ArrayList<>();
 }

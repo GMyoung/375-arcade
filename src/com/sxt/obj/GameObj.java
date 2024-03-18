@@ -103,7 +103,7 @@ public class GameObj {
 
 	// Method to draw the element itself
 	public void paintSelf(Graphics g){
-		g.drawImage(img, x, y, null);
+		g.drawImage(img,x,y,null);
 	}
 	// Method to get its own rectangle, used for collision detection
 	public Rectangle getRec(){

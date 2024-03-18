@@ -23,6 +23,12 @@ public class GameWin extends JFrame {
 	// Variable to record the number of game draws
 	int count=1;
 
+	LittleBoss1 littleBoss1=new LittleBoss1(GameUtils.littleboss1Img,172,112,-200,350,3,this);
+
+	LittleBoss2 littleBoss2=new LittleBoss2(GameUtils.littleboss2Img,172,112,300,-150,2,this);
+
+	public static int planeindex=0;
+
 	public void launch() {
 		// Window visibility
 		this.setVisible(true);
@@ -37,6 +43,7 @@ public class GameWin extends JFrame {
 		// Add all objects to be drawn to the collection for drawing
 		GameUtils.gameObjList.add(bgObj);
 		GameUtils.gameObjList.add(planeObj);
+		planeindex=GameUtils.gameObjList.indexOf(planeObj);
 
 		// Mouse click event
 		this.addMouseListener(new MouseAdapter() {
@@ -122,6 +129,24 @@ public class GameWin extends JFrame {
 				int y = (GameUtils.enemy2ObjList.get(GameUtils.enemy2ObjList.size()-1)).getY();
 				GameUtils.enemy2BulletObjList.add(new Enemy2BulletObj(GameUtils.enemy2BulletImg, 14, 25, x+17, y+55, 5, this));
 				GameUtils.gameObjList.add(GameUtils.enemy2BulletObjList.get(GameUtils.enemy2BulletObjList.size()-1));
+			}
+		}
+		if(count==600&&(!GameUtils.gameObjList.contains(littleBoss2))){
+			GameUtils.gameObjList.add(littleBoss2);
+		}
+		if(count==700&&(!GameUtils.gameObjList.contains(littleBoss1))){
+			GameUtils.gameObjList.add(littleBoss1);
+		}
+		if(count%15==0) {
+			if (GameUtils.gameObjList.contains(littleBoss1)) {
+				GameUtils.littleBoss1BulletList.add(new LittleBoss1Bullet(GameUtils.littleBoss1BulletImg, 42, 42, littleBoss1.getX() + 75, littleBoss1.getY() + 100, 4, this));
+				GameUtils.gameObjList.add(GameUtils.littleBoss1BulletList.get(GameUtils.littleBoss1BulletList.size() - 1));
+			}
+		}
+		if(count%40==0){
+			if(GameUtils.gameObjList.contains(littleBoss2)){
+				GameUtils.littleBoss2BulletList.add(new LittleBoss2Bullet(GameUtils.littleBoss2BulletImg,21,59,littleBoss2.getX()+78,littleBoss2.getY()+100,8,this));
+				GameUtils.gameObjList.add(GameUtils.littleBoss2BulletList.get(GameUtils.littleBoss2BulletList.size()-1));
 			}
 		}
 	}
