@@ -3,3 +3,8 @@
 .idea/vcs.xml
 .idea/copilot/chatSessions/xd.lck
 .idea/copilot/chatSessions/00000000000.xd
+*.lck
+*.xd
+.idea/workspace.xml
+.idea/copilot/chatSessions/xd.lck
+*.xd
