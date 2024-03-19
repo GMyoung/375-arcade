@@ -30,16 +30,7 @@ public class Enemy2Obj extends GameObj{
 				GameUtils.removeList.add(shellObj);
 				health--;
 			}else if(this.getRec().intersects(shellObj.getRec())&&health<=0){
-				ExplodeObj explodeObj=new ExplodeObj(x,y);
-				GameUtils.explodeObjList.add(explodeObj);
-				GameUtils.removeList.add(explodeObj);
-
-				shellObj.setX(-100);
-				shellObj.setY(-100);
-				GameUtils.removeList.add(shellObj);
-				this.x=-200;
-				this.y=-200;
-				GameUtils.removeList.add(this);
+				explode(shellObj);
 			}
 		}
 	}

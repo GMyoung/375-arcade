@@ -1,11 +1,12 @@
 package com.sxt.obj;
 
 import com.sxt.GameWin;
+import com.sxt.utils.GameUtils;
 
 import java.awt.*;
 
 // Parent class for all game elements
-public class GameObj {
+public abstract class GameObj {
 	// Image of the element
 	Image img;
 	// Size of the game element
@@ -108,5 +109,19 @@ public class GameObj {
 	// Method to get its own rectangle, used for collision detection
 	public Rectangle getRec(){
 		return new Rectangle(x, y, width, height);
+	}
+
+	//Removal of duplication
+	public void explode(GameObj intersectingObject) {
+		// Explosion animation appears after collision
+		ExplodeObj explodeObj = new ExplodeObj(x, y);
+		GameUtils.explodeObjList.add(explodeObj);
+		GameUtils.removeList.add(explodeObj);
+		intersectingObject.setX(-100);
+		intersectingObject.setY(-100);
+		this.x = -200;
+		this.y = -200;
+		GameUtils.removeList.add(intersectingObject);
+		GameUtils.removeList.add(this);
 	}
 }
