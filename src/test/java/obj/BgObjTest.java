@@ -12,7 +12,7 @@ public class BgObjTest {
     public void testIsRectangle(){
 
         GameObj bg = new BgObj();
-        assertTrue(bg.getRec() != null);
+        assertNotNull(bg.getRec());
 
     }
 }
