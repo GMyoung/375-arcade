@@ -3,13 +3,13 @@
 
 name: Maven Package
 
-on:
-  push:
-    branches:
-      - "DEV-brookskm"
-  pull_request:
-    branches:
-      - "main" 
+on: workflow_dispatch
+#  push:
+#    branches:
+#      - "DEV-brookskm"
+#  pull_request:
+#    branches:
+#      - "main" 
 #    paths:
 #      - ".github/workflows/test.yaml"
 
