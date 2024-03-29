@@ -37,9 +37,7 @@ public class LittleBoss2 extends GameObj{
 
 		for(ShellObj shellObj: GameUtils.shellObjList){
 			if(this.getRec().intersects(shellObj.getRec())&&health>0){
-				shellObj.setX(-100);
-				shellObj.setX(-100);
-				GameUtils.removeList.add(shellObj);
+				handleShellCollision(shellObj);
 				health--;
 			} else if (this.getRec().intersects(shellObj.getRec())&&health<=0) {
 				ExplodeObj explodeObj=new ExplodeObj(x,y);
@@ -49,9 +47,7 @@ public class LittleBoss2 extends GameObj{
 				GameUtils.giftObjList.add(giftObj);
 				GameUtils.gameObjList.addAll(GameUtils.giftObjList);
 
-				shellObj.setX(-100);
-				shellObj.setX(-100);
-				GameUtils.removeList.add(shellObj);
+				handleShellCollision(shellObj);
 				this.x=-200;
 				this.y=-200;
 				GameUtils.removeList.add(this);

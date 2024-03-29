@@ -31,17 +31,13 @@ public class LittleBoss2Bullet extends GameObj{
 
 		for(ShellObj shellObj: GameUtils.shellObjList){
 			if(this.getRec().intersects(shellObj.getRec())&&health>0){
-				shellObj.setX(-100);
-				shellObj.setX(-100);
-				GameUtils.removeList.add(shellObj);
+				handleShellCollision(shellObj);
 				health--;
 			} else if (this.getRec().intersects(shellObj.getRec())&&health<=0) {
 				ExplodeObj explodeObj=new ExplodeObj(x,y);
 				GameUtils.explodeObjList.add(explodeObj);
 				GameUtils.removeList.add(explodeObj);
-				shellObj.setX(-100);
-				shellObj.setX(-100);
-				GameUtils.removeList.add(shellObj);
+				handleShellCollision(shellObj);
 				this.x=-200;
 				this.y=-200;
 				GameUtils.removeList.add(this);
