@@ -124,4 +124,11 @@ public abstract class GameObj {
 		GameUtils.removeList.add(intersectingObject);
 		GameUtils.removeList.add(this);
 	}
+
+	public void handleShellCollision(ShellObj obj) {
+		obj.setX(-100);
+		obj.setX(-100);
+		GameUtils.removeList.add(obj);
+	}
+
 }

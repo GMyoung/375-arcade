@@ -32,9 +32,7 @@ public class LittleBoss1 extends GameObj{
 		}
 		for(ShellObj shellObj: GameUtils.shellObjList){
 			if(this.getRec().intersects(shellObj.getRec())&&health>0){
-				shellObj.setX(-100);
-				shellObj.setX(-100);
-				GameUtils.removeList.add(shellObj);
+				handleShellCollision(shellObj);
 				health--;
 			} else if (this.getRec().intersects(shellObj.getRec())&&health<=0) {
 				GiftObj giftObj=new GiftObj(this.x,this.y);

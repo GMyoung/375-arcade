@@ -25,9 +25,7 @@ public class Enemy2Obj extends GameObj{
 		y+=speed;
 		for (ShellObj shellObj: GameUtils.shellObjList) {
 			if(this.getRec().intersects(shellObj.getRec())&&health>0){
-				shellObj.setX(-100);
-				shellObj.setY(-100);
-				GameUtils.removeList.add(shellObj);
+				handleShellCollision(shellObj);
 				health--;
 			}else if(this.getRec().intersects(shellObj.getRec())&&health<=0){
 				explode(shellObj);
