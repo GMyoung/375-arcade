@@ -1,6 +1,7 @@
 package com.sxt.obj;
 
 import com.sxt.GameWin;
+import com.sxt.utils.GameUtils;
 
 import java.awt.*;
 
@@ -22,6 +23,9 @@ public class ShellObj extends GameObj{
 		super.paintSelf(g);
 		//move bullets
 		y -= speed;
+		if(y<0){
+			GameUtils.removeList.add(this);
+		}
 	}
 
 	@Override

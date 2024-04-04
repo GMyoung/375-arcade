@@ -32,6 +32,14 @@ public class GameUtils {
 	public static Image littleBoss2BulletImg= Toolkit.getDefaultToolkit().getImage("imgs/littleboss2bullet.png");
 	public static Image giftImg= Toolkit.getDefaultToolkit().getImage("imgs/gift.png");
 
+	public static Image doubleShellImg= Toolkit.getDefaultToolkit().getImage("imgs/doubleshell.png");
+
+	public static Image tripleShellImg= Toolkit.getDefaultToolkit().getImage("imgs/tripleshell.png");
+
+	public static Image bossBulletImg= Toolkit.getDefaultToolkit().getImage("imgs/bossbullet.png");
+
+	public static Image warningImg= Toolkit.getDefaultToolkit().getImage("imgs/warning.gif");
+
 
 	// Create a collection for our plane bullets
 	public static List<ShellObj> shellObjList = new ArrayList<>();
@@ -57,4 +65,17 @@ public class GameUtils {
 	public static List<ExplodeObj> explodeObjList = new ArrayList<>();
 
 	public static List<GiftObj> giftObjList=new ArrayList<>();
+
+	public static List<DoubleShellObj> doubleShellObjList=new ArrayList<>();
+
+	public static List<TripleShellObj> tripleShellObjList=new ArrayList<>();
+
+	public static List<BossBullet> bossBulletList=new ArrayList<>();
+
+	public static void drawWord(Graphics gImage,String str,Color color,int size,int x,int y){
+		gImage.setColor(color);
+
+		gImage.drawString(str,x,y);
+	}
+
 }

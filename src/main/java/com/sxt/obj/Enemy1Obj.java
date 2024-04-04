@@ -27,6 +27,20 @@ public class Enemy1Obj extends GameObj{
 				explode(shellObj);
 			}
 		}
+		for(DoubleShellObj doubleshellObj: GameUtils.doubleShellObjList){
+			if(this.getRec().intersects(doubleshellObj.getRec())){
+				explode(doubleshellObj);
+			}
+		}
+		for(TripleShellObj tripleshellObj: GameUtils.tripleShellObjList){
+			if(this.getRec().intersects(tripleshellObj.getRec())){
+				explode(tripleshellObj);
+			}
+		}
+		if(this.y>800){
+			GameUtils.removeList.add(this);
+		}
+
 	}
 
 	@Override

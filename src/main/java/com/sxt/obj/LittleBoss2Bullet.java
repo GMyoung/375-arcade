@@ -43,6 +43,30 @@ public class LittleBoss2Bullet extends GameObj{
 				GameUtils.removeList.add(this);
 			}
 		}
+		for(DoubleShellObj doubleshellObj: GameUtils.doubleShellObjList){
+			if(this.getRec().intersects(doubleshellObj.getRec())&&health>0){
+				doubleshellObj.setX(-100);
+				doubleshellObj.setY(-100);
+				GameUtils.removeList.add(doubleshellObj);
+				health-=3;
+			} else if (this.getRec().intersects(doubleshellObj.getRec())&&health<=0) {
+
+				explode(doubleshellObj);
+				GameWin.score+=1;
+			}
+		}
+		for(TripleShellObj tripleshellObj: GameUtils.tripleShellObjList){
+			if(this.getRec().intersects(tripleshellObj.getRec())&&health>0){
+				tripleshellObj.setX(-100);
+				tripleshellObj.setY(-100);
+				GameUtils.removeList.add(tripleshellObj);
+				health-=5;
+			} else if (this.getRec().intersects(tripleshellObj.getRec())&&health<=0) {
+
+				explode(tripleshellObj);
+				GameWin.score+=3;
+			}
+		}
 	}
 
 	@Override

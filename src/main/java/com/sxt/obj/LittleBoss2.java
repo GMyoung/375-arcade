@@ -53,6 +53,26 @@ public class LittleBoss2 extends GameObj{
 				GameUtils.removeList.add(this);
 			}
 		}
+		for(DoubleShellObj doubleshellObj: GameUtils.doubleShellObjList){
+			if(this.getRec().intersects(doubleshellObj.getRec())){
+				explode(doubleshellObj);
+			}else if (this.getRec().intersects(doubleshellObj.getRec())&&health<=0) {
+				GiftObj giftObj=new GiftObj(this.x,this.y);
+				GameUtils.giftObjList.add(giftObj);
+				GameUtils.gameObjList.addAll(GameUtils.giftObjList);
+				explode(doubleshellObj);
+			}
+		}
+		for(TripleShellObj tripleshellObj: GameUtils.tripleShellObjList){
+			if(this.getRec().intersects(tripleshellObj.getRec())){
+				explode(tripleshellObj);
+			}else if (this.getRec().intersects(tripleshellObj.getRec())&&health<=0) {
+				GiftObj giftObj=new GiftObj(this.x,this.y);
+				GameUtils.giftObjList.add(giftObj);
+				GameUtils.gameObjList.addAll(GameUtils.giftObjList);
+				explode(tripleshellObj);
+			}
+		}
 	}
 
 	@Override

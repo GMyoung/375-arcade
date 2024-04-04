@@ -5,20 +5,20 @@ import com.sxt.utils.GameUtils;
 
 import java.awt.*;
 
-public class LittleBoss1Bullet extends GameObj{
-	public LittleBoss1Bullet() {
+public class BossBullet extends GameObj{
+	public BossBullet() {
 		super();
 	}
 
-	public LittleBoss1Bullet(Image img, int width, int height, int x, int y, double speed, GameWin frame) {
+	public BossBullet(Image img, int width, int height, int x, int y, double speed, GameWin frame) {
 		super(img, width, height, x, y, speed, frame);
 	}
 
-	public LittleBoss1Bullet(Image img, int x, int y, double speed) {
+	public BossBullet(Image img, int x, int y, double speed) {
 		super(img, x, y, speed);
 	}
 
-	public LittleBoss1Bullet(int x, int y) {
+	public BossBullet(int x, int y) {
 		super(x, y);
 	}
 

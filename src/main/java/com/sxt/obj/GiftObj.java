@@ -25,6 +25,8 @@ public class GiftObj extends GameObj{
 	@Override
 	public void paintSelf(Graphics g) {
 		super.img= GameUtils.giftImg;
+		super.width=64;
+		super.height=62;
 		super.paintSelf(g);
 	}
 

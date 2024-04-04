@@ -123,6 +123,7 @@ public abstract class GameObj {
 		this.y = -200;
 		GameUtils.removeList.add(intersectingObject);
 		GameUtils.removeList.add(this);
+		GameWin.score+=1;
 	}
 
 	public void handleShellCollision(ShellObj obj) {
