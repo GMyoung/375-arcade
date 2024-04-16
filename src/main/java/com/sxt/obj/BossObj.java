@@ -53,7 +53,7 @@ public class BossObj extends GameObj{
 				doubleshellObj.setX(-100);
 				doubleshellObj.setY(-100);
 				GameUtils.removeList.add(doubleshellObj);
-				health-=3;
+				health--;
 			} else if (this.getRec().intersects(doubleshellObj.getRec())&&health<=0) {
 
 				explode(doubleshellObj);
@@ -67,7 +67,7 @@ public class BossObj extends GameObj{
 				tripleshellObj.setX(-100);
 				tripleshellObj.setY(-100);
 				GameUtils.removeList.add(tripleshellObj);
-				health-=5;
+				health--;
 			} else if (this.getRec().intersects(tripleshellObj.getRec())&&health<=0) {
 
 				explode(tripleshellObj);
