@@ -1,11 +1,13 @@
 package com.sxt.obj;
 
 import com.sxt.GameWin;
+import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
 
 import java.awt.*;
 
 public class Enemy1Obj extends GameObj{
+	private int health = 1;
 	public Enemy1Obj() {
 		super();
 	}
@@ -22,25 +24,21 @@ public class Enemy1Obj extends GameObj{
 	public void paintSelf(Graphics g) {
 		super.paintSelf(g);
 		y+=speed;
-		for (ShellObj shellObj: GameUtils.shellObjList) {
-			if(this.getRec().intersects(shellObj.getRec())){
-				explode(shellObj);
-			}
-		}
-		for(DoubleShellObj doubleshellObj: GameUtils.doubleShellObjList){
-			if(this.getRec().intersects(doubleshellObj.getRec())){
-				explode(doubleshellObj);
-			}
-		}
-		for(TripleShellObj tripleshellObj: GameUtils.tripleShellObjList){
-			if(this.getRec().intersects(tripleshellObj.getRec())){
-				explode(tripleshellObj);
-			}
-		}
 		if(this.y>800){
-			GameUtils.removeList.add(this);
+			GameUtils.masterList.get(GameObjType.ENEMY1).remove(this);
 		}
+		checkBulletHitByType();
 
+	}
+
+	@Override
+	public void damage(Integer dmg, GameObj bullet) {
+		health -= dmg;
+		if (health <= 0) {
+			//no gifts!
+			explode(bullet);
+			GameUtils.masterList.get(GameObjType.ENEMY1).remove(this);
+		}
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.sxt.obj;
 
 
 import com.sxt.GameWin;
+import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
 
 import java.awt.*;
@@ -36,23 +37,24 @@ public class BossObj extends GameObj{
 			}
 		}
 
-		for(ShellObj shellObj: GameUtils.shellObjList){
+		for(GameObj shellObj: GameUtils.masterList.get(GameObjType.SHELLOBJ)){
 			if(this.getRec().intersects(shellObj.getRec())&&health>0){
-				handleShellCollision(shellObj);
+				shellObj.explode(null);
+				GameUtils.masterList.get(GameObjType.SHELLOBJ).remove(shellObj);
 				health--;
 			} else if (this.getRec().intersects(shellObj.getRec())&&health<=0) {
 
 				explode(shellObj);
+				GameUtils.masterList.get(GameObjType.SHELLOBJ).remove(shellObj);
 				GameWin.state=4;
 				GameWin.score+=10;
 			}
 		}
 
-		for(DoubleShellObj doubleshellObj: GameUtils.doubleShellObjList){
+		for(GameObj doubleshellObj: GameUtils.masterList.get(GameObjType.DOUBLESHELLOBJ)){
 			if(this.getRec().intersects(doubleshellObj.getRec())&&health>0){
-				doubleshellObj.setX(-100);
-				doubleshellObj.setY(-100);
-				GameUtils.removeList.add(doubleshellObj);
+				doubleshellObj.explode(null);
+				GameUtils.masterList.get(GameObjType.DOUBLESHELLOBJ).remove(doubleshellObj);
 				health--;
 			} else if (this.getRec().intersects(doubleshellObj.getRec())&&health<=0) {
 
@@ -62,15 +64,15 @@ public class BossObj extends GameObj{
 			}
 		}
 
-		for(TripleShellObj tripleshellObj: GameUtils.tripleShellObjList){
+		for(GameObj tripleshellObj: GameUtils.masterList.get(GameObjType.TRIPLESHELLOBJ)){
 			if(this.getRec().intersects(tripleshellObj.getRec())&&health>0){
-				tripleshellObj.setX(-100);
-				tripleshellObj.setY(-100);
-				GameUtils.removeList.add(tripleshellObj);
+				tripleshellObj.explode(null);
+				GameUtils.masterList.get(GameObjType.SHELLOBJ).remove(tripleshellObj);
 				health--;
 			} else if (this.getRec().intersects(tripleshellObj.getRec())&&health<=0) {
 
 				explode(tripleshellObj);
+				GameUtils.masterList.get(GameObjType.BOSS).remove(this);
 				GameWin.state=4;
 				GameWin.score+=10;
 			}

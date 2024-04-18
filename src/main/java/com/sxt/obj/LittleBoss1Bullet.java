@@ -1,6 +1,7 @@
 package com.sxt.obj;
 
 import com.sxt.GameWin;
+import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
 
 import java.awt.*;
@@ -27,7 +28,7 @@ public class LittleBoss1Bullet extends GameObj{
 		super.paintSelf(g);
 		y+=speed;
 		if(this.y>800){
-			GameUtils.removeList.add(this);
+			GameUtils.masterList.get(GameObjType.LITTLEBOSS1BULLET).remove(this);
 		}
 	}
 

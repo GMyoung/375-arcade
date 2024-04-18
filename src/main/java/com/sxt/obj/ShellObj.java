@@ -1,6 +1,7 @@
 package com.sxt.obj;
 
 import com.sxt.GameWin;
+import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
 
 import java.awt.*;
@@ -24,7 +25,7 @@ public class ShellObj extends GameObj{
 		//move bullets
 		y -= speed;
 		if(y<0){
-			GameUtils.removeList.add(this);
+			GameUtils.masterList.get(GameObjType.SHELLOBJ).remove(this);
 		}
 	}
 

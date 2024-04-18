@@ -1,6 +1,7 @@
 package com.sxt.obj;
 
 import com.sxt.GameWin;
+import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
 
 import java.awt.*;
@@ -27,7 +28,7 @@ public class TripleShellObj extends GameObj{
 		super.paintSelf(g);
 		y-=speed;
 		if(y<0){
-			GameUtils.removeList.add(this);
+			GameUtils.masterList.get(GameObjType.TRIPLESHELLOBJ).remove(this);
 		}
 	}
 

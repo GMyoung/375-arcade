@@ -1,0 +1,21 @@
+package com.sxt.utils;
+
+public enum GameObjType {
+    BG,
+    PLANEOBJ,
+    TRIPLESHELLOBJ,
+    DOUBLESHELLOBJ,
+    EXPLODEOBJ,
+    ENEMY1,
+    ENEMY2,
+    ENEMY2BULLETOBJECT,
+    LITTLEBOSS1,
+    LITTLEBOSS2,
+    LITTLEBOSS1BULLET,
+    LITTLEBOSS2BULLET,
+    BOSS,
+    BOSSBULLET,
+    WARN,
+    GIFT,
+    SHELLOBJ
+}

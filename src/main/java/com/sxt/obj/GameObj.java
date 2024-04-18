@@ -1,9 +1,12 @@
 package com.sxt.obj;
 
 import com.sxt.GameWin;
+import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Parent class for all game elements
 public abstract class GameObj {
@@ -115,21 +118,59 @@ public abstract class GameObj {
 	public void explode(GameObj intersectingObject) {
 		// Explosion animation appears after collision
 		ExplodeObj explodeObj = new ExplodeObj(x, y);
-		GameUtils.explodeObjList.add(explodeObj);
-		GameUtils.removeList.add(explodeObj);
-		intersectingObject.setX(-100);
-		intersectingObject.setY(-100);
+		GameUtils.masterList.get(GameObjType.EXPLODEOBJ).add(explodeObj);
+		if (intersectingObject != null) {
+			intersectingObject.setX(-100);
+			intersectingObject.setY(-100);
+		}
 		this.x = -200;
 		this.y = -200;
-		GameUtils.removeList.add(intersectingObject);
-		GameUtils.removeList.add(this);
 		GameWin.score+=1;
 	}
 
-	public void handleShellCollision(ShellObj obj) {
-		obj.setX(-100);
-		obj.setX(-100);
-		GameUtils.removeList.add(obj);
+//	public void handleShellCollision(GameObj playerShellObj) { //This should be Our playerShellObj
+//		playerShellObj.setX(-100);
+//		playerShellObj.setX(-100);
+//		GameUtils.masterList.get(GameObjType.Ga).add(playerShellObj);
+//	}
+
+
+	//TODO: move these next methods to a boss-specific subclass.
+	void checkBulletHitByType() {
+		//Find shells for removal
+		ArrayList<GameObj> shellsToRemove = new ArrayList<>();
+		for(GameObj shellObj: GameUtils.masterList.get(GameObjType.SHELLOBJ)){
+			if (shellObj.getRec().intersects(this.getRec())) {
+				damage(1, shellObj);
+				shellsToRemove.add(shellObj);
+			}
+		}
+
+		ArrayList<GameObj> doubleToRemove = new ArrayList<>();
+		for(GameObj doubleshellObj: GameUtils.masterList.get(GameObjType.DOUBLESHELLOBJ)){
+			if (doubleshellObj.getRec().intersects(this.getRec())) {
+				damage(5, doubleshellObj);
+				doubleToRemove.add(doubleshellObj);
+			}
+		}
+
+		ArrayList<GameObj> tripleToRemove = new ArrayList<>();
+		for(GameObj tripleshellObj: GameUtils.masterList.get(GameObjType.TRIPLESHELLOBJ)){
+			if (tripleshellObj.getRec().intersects(this.getRec())) {
+				damage(10, tripleshellObj);
+				tripleToRemove.add(tripleshellObj);
+			}
+		}
+
+		//Avoids concurrent modification
+		GameUtils.masterList.get(GameObjType.SHELLOBJ).removeAll(shellsToRemove);
+		GameUtils.masterList.get(GameObjType.DOUBLESHELLOBJ).removeAll(doubleToRemove);
+		GameUtils.masterList.get(GameObjType.TRIPLESHELLOBJ).removeAll(tripleToRemove);
+
+	}
+
+	public void damage(Integer dmg, GameObj bullet) {
+		//FIXME Has overrides I promise. -K
 	}
 
 }

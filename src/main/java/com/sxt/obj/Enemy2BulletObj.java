@@ -1,6 +1,7 @@
 package com.sxt.obj;
 
 import com.sxt.GameWin;
+import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
 
 import java.awt.*;
@@ -23,7 +24,7 @@ public class Enemy2BulletObj extends GameObj{
 		super.paintSelf(g);
 		y+=speed;
 		if(this.y>800){
-			GameUtils.removeList.add(this);
+			GameUtils.masterList.get(GameObjType.ENEMY2BULLETOBJECT).remove(this);
 		}
 	}
 

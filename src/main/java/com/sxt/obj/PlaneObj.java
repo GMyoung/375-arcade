@@ -1,6 +1,7 @@
 package com.sxt.obj;
 
 import com.sxt.GameWin;
+import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
 
 import java.awt.*;
@@ -11,7 +12,7 @@ public class PlaneObj extends GameObj {
 	public PlaneObj() {
 		super();
 	}
-	public static int times=1;
+	public static int times=0;
 
 	LittleBoss1 littleBoss1=new LittleBoss1();
 	LittleBoss2 littleBoss2=new LittleBoss2();
@@ -37,100 +38,81 @@ public class PlaneObj extends GameObj {
 		super.paintSelf(g);
 		// Perform collision detection
 		// After collision between our plane and enemy small planes, both disappear
-		for (Enemy1Obj enemy1Obj : GameUtils.enemy1ObjList) {
+		for (GameObj enemy1Obj : GameUtils.masterList.get(GameObjType.ENEMY1)) {
 			if (this.getRec().intersects(enemy1Obj.getRec())) {
 				// Explosion animation appears after collision
 				explode(enemy1Obj);
+				GameWin.state=3;
 			}
 		}
 		// Both disappear after collision between our plane and enemy big planes
-		for (Enemy2Obj enemy2Obj : GameUtils.enemy2ObjList) {
+		for (GameObj enemy2Obj : GameUtils.masterList.get(GameObjType.ENEMY2)) {
 			if (this.getRec().intersects(enemy2Obj.getRec())) {
 				// Explosion animation appears after collision
 				explode(enemy2Obj);
+				GameWin.state=3;
 			}
 		}
 		// Both disappear after collision between our plane and enemy big plane bullets
-		for (Enemy2BulletObj enemy2BulletObj : GameUtils.enemy2BulletObjList) {
+		for (GameObj enemy2BulletObj : GameUtils.masterList.get(GameObjType.ENEMY2BULLETOBJECT)) {
 			if (this.getRec().intersects(enemy2BulletObj.getRec())) {
 				// Explosion animation appears after collision
 				explode(enemy2BulletObj);
+				GameWin.state=3;
 			}
 		}
 		if(this.getRec().intersects(littleBoss1.getRec())){
 
-			ExplodeObj explodeObj=new ExplodeObj(x,y);
-			GameUtils.explodeObjList.add(explodeObj);
-			GameUtils.removeList.add(explodeObj);
-			this.x=-200;
-			this.y=-200;
-			GameUtils.removeList.add(this);
+//			ExplodeObj explodeObj=new ExplodeObj(x,y);
+//			GameUtils.explodeObjList.add(explodeObj);
+//			GameUtils.removeList.add(explodeObj);
+//			this.x=-200;
+//			this.y=-200;
+//			GameUtils.removeList.add(this);
+			explode(null);
 			GameWin.state=3;
 		}
 
 		if(this.getRec().intersects(littleBoss2.getRec())){
 			//绘制爆炸
-			ExplodeObj explodeObj=new ExplodeObj(x,y);
-			GameUtils.explodeObjList.add(explodeObj);
-			GameUtils.removeList.add(explodeObj);
-			this.x=-200;
-			this.y=-200;
-			GameUtils.removeList.add(this);
+//			ExplodeObj explodeObj=new ExplodeObj(x,y);
+//			GameUtils.explodeObjList.add(explodeObj);
+//			GameUtils.removeList.add(explodeObj);
+//			this.x=-200;
+//			this.y=-200;
+//			GameUtils.removeList.add(this);
+			explode(null);
 			GameWin.state=3;
 		}
 
-		for (LittleBoss1Bullet littleBoss1Bullet:GameUtils.littleBoss1BulletList) {
+		for (GameObj littleBoss1Bullet:GameUtils.masterList.get(GameObjType.LITTLEBOSS1BULLET)) {
 			if(this.getRec().intersects(littleBoss1Bullet.getRec())){
 
-				ExplodeObj explodeObj=new ExplodeObj(x,y);
-				GameUtils.explodeObjList.add(explodeObj);
-				GameUtils.removeList.add(explodeObj);
-				littleBoss1Bullet.setX(-100);
-				littleBoss1Bullet.setY(-100);
-				GameUtils.removeList.add(littleBoss1Bullet);
-				this.x=-200;
-				this.y=-200;
-				GameUtils.removeList.add(this);
+				explode(littleBoss1Bullet);
 				GameWin.state=3;
 			}
 		}
 
-		for (LittleBoss2Bullet littleBoss2Bullet:GameUtils.littleBoss2BulletList) {
+		for (GameObj littleBoss2Bullet:GameUtils.masterList.get(GameObjType.LITTLEBOSS2BULLET)) {
 			if(this.getRec().intersects(littleBoss2Bullet.getRec())){
 
-				ExplodeObj explodeObj=new ExplodeObj(x,y);
-				GameUtils.explodeObjList.add(explodeObj);
-				GameUtils.removeList.add(explodeObj);
-				littleBoss2Bullet.setX(-100);
-				littleBoss2Bullet.setY(-100);
-				GameUtils.removeList.add(littleBoss2Bullet);
-				this.x=-200;
-				this.y=-200;
-				GameUtils.removeList.add(this);
+				explode(littleBoss2Bullet);
 				GameWin.state=3;
 			}
 		}
 
-		for (GiftObj giftObj: GameUtils.giftObjList) {
+		for (GameObj giftObj: GameUtils.masterList.get(GameObjType.GIFT)) {
 			if(this.getRec().intersects(giftObj.getRec())){
 				giftObj.setX(-100);
 				giftObj.setY(-100);
-				GameUtils.removeList.add(giftObj);
+				GameUtils.masterList.get(GameObjType.GIFT).remove(giftObj);
 				times++;
 			}
 		}
 
-		for(BossBullet bossBullet:GameUtils.bossBulletList){
+		for(GameObj bossBullet:GameUtils.masterList.get(GameObjType.BOSSBULLET)){
 			if(this.getRec().intersects(bossBullet.getRec())){
-				ExplodeObj explodeObj=new ExplodeObj(x,y);
-				GameUtils.explodeObjList.add(explodeObj);
-				GameUtils.removeList.add(explodeObj);
-				bossBullet.setX(-100);
-				bossBullet.setY(-100);
-				this.x=-200;
-				this.y=-200;
-				GameUtils.removeList.add(bossBullet);
-				GameUtils.removeList.add(this);
+				explode(bossBullet);
 				GameWin.state=3;
 			}
 		}

@@ -1,6 +1,7 @@
 package com.sxt;
 
 import com.sxt.obj.*;
+import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class GameWin extends JFrame {
 	// Variable to record game state
@@ -49,9 +51,16 @@ public class GameWin extends JFrame {
 		// Closing window ends process
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Add all objects to be drawn to the collection for drawing
-		GameUtils.gameObjList.add(bgObj);
-		GameUtils.gameObjList.add(planeObj);
-		planeindex=GameUtils.gameObjList.indexOf(planeObj);
+
+		//Create master map objects.
+		//Simply put, all cals to GamUtils.gamObjList... are now replaced
+		//with GameUtils.masteLits.get(GameObjectType.<Type>)...
+		for (GameObjType vals: GameObjType.values()) {
+			GameUtils.masterList.put(vals, new ArrayList<>());
+		}
+		GameUtils.masterList.get(GameObjType.BG).add(bgObj);
+		GameUtils.masterList.get(GameObjType.PLANEOBJ).add(planeObj);
+		planeindex=GameUtils.masterList.get(GameObjType.PLANEOBJ).indexOf(planeObj);
 
 		// Mouse click event
 		this.addMouseListener(new MouseAdapter() {
@@ -75,6 +84,7 @@ public class GameWin extends JFrame {
 				}
 			}
 		});
+
 		while (true) {
 			createObj();
 			repaint();
@@ -109,14 +119,20 @@ public class GameWin extends JFrame {
 		if (state == 1) {
 
 			// Add explosion collection to the general elements collection
-			GameUtils.gameObjList.addAll(GameUtils.explodeObjList);
+			//GameUtils.masterList.get(GameObjType.EXPLODEOBJ).addAll(GameUtils.explodeObjList);
 
 			// No longer drawing a single game element, all elements are in the collection, just iterate through and draw
-			for (int i = 0; i < GameUtils.gameObjList.size(); i++) {
-				GameUtils.gameObjList.get(i).paintSelf(gImage);
+//			for (int i = 0; i < GameUtils.gameObjList.size(); i++) {
+//				GameUtils.gameObjList.get(i).paintSelf(gImage);
+//			}
+
+			for (GameObjType types: GameUtils.masterList.keySet()) {
+					for (int i = 0; i < GameUtils.masterList.get(types).size(); i++) {
+						GameUtils.masterList.get(types).get(i).paintSelf(gImage);
+				}
 			}
 			// Remove elements from the general collection
-			GameUtils.gameObjList.removeAll(GameUtils.removeList);
+			//GameUtils.gameObjList.removeAll(GameUtils.removeList);
 			count++;
 		}
 		if(state==2){
@@ -136,7 +152,7 @@ public class GameWin extends JFrame {
 		// Draw the off-screen image onto the game window
 		g.drawImage(offScreenImage, 0, 0, null);
 
-		System.out.println(GameUtils.gameObjList.size());
+		System.out.println(GameUtils.masterList.entrySet());
 
 	}
 
@@ -144,75 +160,85 @@ public class GameWin extends JFrame {
 	void createObj() {
 		if (count % 15 == 0) { // Controls the speed of bullet generation
 			if (planeObj.times == 0) {
-				GameUtils.shellObjList.add(new ShellObj(GameUtils.shellImg, 14, 29, planeObj.getX() + 12, planeObj.getY() - 20, 5, this));
-				GameUtils.gameObjList.add(GameUtils.shellObjList.get(GameUtils.shellObjList.size() - 1));//添加到所有元素集合中的对象，是新new出来的子弹对象，并不是整个子弹集合
+				GameUtils.masterList.get(GameObjType.SHELLOBJ).add(new ShellObj(GameUtils.shellImg, 14, 29, planeObj.getX() + 12, planeObj.getY() - 20, 5, this));
+				//GameUtils.shellObjList.add();
+				//GameUtils.gameObjList.add(GameUtils.shellObjList.get(GameUtils.shellObjList.size() - 1));//添加到所有元素集合中的对象，是新new出来的子弹对象，并不是整个子弹集合
 			}
 			if(planeObj.times==1){
-				GameUtils.doubleShellObjList.add(new DoubleShellObj(GameUtils.doubleShellImg,32,64,planeObj.getX()+5,planeObj.getY()-20,8,this));
-				GameUtils.gameObjList.add(GameUtils.doubleShellObjList.get(GameUtils.doubleShellObjList.size()-1));
+				GameUtils.masterList.get(GameObjType.DOUBLESHELLOBJ).add(new DoubleShellObj(GameUtils.doubleShellImg,32,64,planeObj.getX()+5,planeObj.getY()-20,8,this));
+			//	GameUtils.doubleShellObjList.add();
+		//		GameUtils.gameObjList.add(GameUtils.doubleShellObjList.get(GameUtils.doubleShellObjList.size()-1));
 			}
 			if(planeObj.times==2){
-				GameUtils.tripleShellObjList.add(new TripleShellObj(GameUtils.tripleShellImg,64,182,planeObj.getX()-5,planeObj.getY()-100,15,this));
-				GameUtils.gameObjList.add(GameUtils.tripleShellObjList.get(GameUtils.tripleShellObjList.size()-1));
+				GameUtils.masterList.get(GameObjType.TRIPLESHELLOBJ).add(new TripleShellObj(GameUtils.tripleShellImg,64,182,planeObj.getX()-5,planeObj.getY()-100,15,this));
+			//	GameUtils.tripleShellObjList.add();
+			//	GameUtils.gameObjList.add(GameUtils.tripleShellObjList.get(GameUtils.tripleShellObjList.size()-1));
 			}
 		}
 		// Two types of enemy planes
 		if (count % 15 == 0) { // Control the generation speed of small enemy planes
-			GameUtils.enemy1ObjList.add(new Enemy1Obj(GameUtils.enemy1Img, 32, 24, (int) ((Math.random() * 10) * 60), 0, 5, this));
-			GameUtils.gameObjList.add(GameUtils.enemy1ObjList.get(GameUtils.enemy1ObjList.size() - 1));
+			GameObj newObj = new Enemy1Obj(GameUtils.enemy1Img, 32, 24, (int) ((Math.random() * 10) * 60), 0, 5, this);
+		//	GameUtils.gameObjList.add(GameUtils.enemy1ObjList.get(GameUtils.enemy1ObjList.size() - 1));
+			GameUtils.masterList.get(GameObjType.ENEMY1).add(newObj);
+
 		}
 		if(count % 20 == 0) { // Control the rate of big enemy plane bullets
 			if (count % 100 == 0) {
-				GameUtils.enemy2ObjList.add(new Enemy2Obj(GameUtils.enemy2Img, 44, 67, (int) ((Math.random() * 10) * 60), 0, 3, this));
-				GameUtils.gameObjList.add(GameUtils.enemy2ObjList.get(GameUtils.enemy2ObjList.size() - 1));
+				GameUtils.masterList.get(GameObjType.ENEMY2).add(new Enemy2Obj(GameUtils.enemy2Img, 44, 67, (int) ((Math.random() * 10) * 60), 0, 3, this));
+				//GameUtils.gameObjList.add(GameUtils.enemy2ObjList.get(GameUtils.enemy2ObjList.size() - 1));
+			//	GameUtils.masterList.get(GameObjType.ENEMY2).add(GameUtils.enemy2ObjList.get(GameUtils.enemy2ObjList.size() - 1));
+
 			}
-			if(GameUtils.enemy2ObjList.size() > 0){
+			if(GameUtils.masterList.get(GameObjType.ENEMY2).size() > 0){
 				// The x and y here are the positions of the latest big enemy plane object created; we need to use this position to generate bullets for the big enemy plane
-				int x = (GameUtils.enemy2ObjList.get(GameUtils.enemy2ObjList.size()-1)).getX();
-				int y = (GameUtils.enemy2ObjList.get(GameUtils.enemy2ObjList.size()-1)).getY();
-				GameUtils.enemy2BulletObjList.add(new Enemy2BulletObj(GameUtils.enemy2BulletImg, 14, 25, x+17, y+55, 5, this));
-				GameUtils.gameObjList.add(GameUtils.enemy2BulletObjList.get(GameUtils.enemy2BulletObjList.size()-1));
+				int x = (GameUtils.masterList.get(GameObjType.ENEMY2).get(GameUtils.masterList.get(GameObjType.ENEMY2).size()-1)).getX();
+				int y = (GameUtils.masterList.get(GameObjType.ENEMY2).get(GameUtils.masterList.get(GameObjType.ENEMY2).size()-1)).getY();
+				GameUtils.masterList.get(GameObjType.ENEMY2BULLETOBJECT).add(new Enemy2BulletObj(GameUtils.enemy2BulletImg, 14, 25, x+17, y+55, 5, this));
+			//	GameUtils.masterList.get(GameObjType.ENEMY2BULLETOBJECT).add(GameUtils.enemy2BulletObjList.get(GameUtils.enemy2BulletObjList.size()-1));
 			}
 		}
-		if(count==600&&(!GameUtils.gameObjList.contains(littleBoss2))){
-			GameUtils.gameObjList.add(littleBoss2);
+		if(count==600&&(!GameUtils.masterList.get(GameObjType.LITTLEBOSS2).contains(littleBoss2))){
+		//	GameUtils.gameObjList.add(littleBoss2);
+			GameUtils.masterList.get(GameObjType.LITTLEBOSS2).add(littleBoss2);
 		}
-		if(count==700&&(!GameUtils.gameObjList.contains(littleBoss1))){
-			GameUtils.gameObjList.add(littleBoss1);
+		if(count==700&&(!GameUtils.masterList.get(GameObjType.LITTLEBOSS1).contains(littleBoss1))){
+			GameUtils.masterList.get(GameObjType.LITTLEBOSS1).add(littleBoss1);
 		}
 		if(count%15==0) {
-			if (GameUtils.gameObjList.contains(littleBoss1)) {
-				GameUtils.littleBoss1BulletList.add(new LittleBoss1Bullet(GameUtils.littleBoss1BulletImg, 42, 42, littleBoss1.getX() + 75, littleBoss1.getY() + 100, 4, this));
-				GameUtils.gameObjList.add(GameUtils.littleBoss1BulletList.get(GameUtils.littleBoss1BulletList.size() - 1));
+			if (GameUtils.masterList.get(GameObjType.LITTLEBOSS1).contains(littleBoss1)) {
+				GameUtils.masterList.get(GameObjType.LITTLEBOSS1BULLET).add(new LittleBoss1Bullet(GameUtils.littleBoss1BulletImg, 42, 42, littleBoss1.getX() + 75, littleBoss1.getY() + 100, 4, this));
+				//GameUtils.gameObjList.add(GameUtils.littleBoss1BulletList.get(GameUtils.littleBoss1BulletList.size() - 1));
+				//GameUtils.masterList.get(GameObjType.LITTLEBOSS1BULLET).add(GameUtils.littleBoss1BulletList.get(GameUtils.littleBoss1BulletList.size() - 1));
+
 			}
 		}
 		if(count%40==0){
-			if(GameUtils.gameObjList.contains(littleBoss2)){
-				GameUtils.littleBoss2BulletList.add(new LittleBoss2Bullet(GameUtils.littleBoss2BulletImg,21,59,littleBoss2.getX()+78,littleBoss2.getY()+100,8,this));
-				GameUtils.gameObjList.add(GameUtils.littleBoss2BulletList.get(GameUtils.littleBoss2BulletList.size()-1));
+			if(GameUtils.masterList.get(GameObjType.LITTLEBOSS2).contains(littleBoss2)){
+				GameUtils.masterList.get(GameObjType.LITTLEBOSS2BULLET).add(new LittleBoss2Bullet(GameUtils.littleBoss2BulletImg,21,59,littleBoss2.getX()+78,littleBoss2.getY()+100,8,this));
+			//	GameUtils.masterList.get(GameObjType.LITTLEBOSS2BULLET).add(GameUtils.littleBoss2BulletList.get(GameUtils.littleBoss2BulletList.size()-1));
 			}
 		}
-		if(count==1300&&(!GameUtils.gameObjList.contains(bossObj))){
-			GameUtils.gameObjList.add(bossObj);
+		if(count==1300&&(!GameUtils.masterList.get(GameObjType.BOSS).contains(bossObj))){
+			GameUtils.masterList.get(GameObjType.BOSS).add(bossObj);
 		}
 
 		if(count%20==0) {
-			if (GameUtils.gameObjList.contains(bossObj)) {
-				GameUtils.littleBoss1BulletList.add(new LittleBoss1Bullet(GameUtils.littleBoss1BulletImg, 42, 42, bossObj.getX() + 10, bossObj.getY() + 130, 6, this));
-				GameUtils.gameObjList.add(GameUtils.littleBoss1BulletList.get(GameUtils.littleBoss1BulletList.size() - 1));
+			if (GameUtils.masterList.get(GameObjType.BOSS).contains(bossObj)) {
+				GameUtils.masterList.get(GameObjType.LITTLEBOSS1BULLET).add(new LittleBoss1Bullet(GameUtils.littleBoss1BulletImg, 42, 42, bossObj.getX() + 10, bossObj.getY() + 130, 6, this));
+				//GameUtils.masterList.get(GameObjType.LITTLEBOSS1BULLET).add(GameUtils.littleBoss1BulletList.get(GameUtils.littleBoss1BulletList.size() - 1));
 				if (count % 40 == 0) {
-					GameUtils.littleBoss2BulletList.add(new LittleBoss2Bullet(GameUtils.littleBoss2BulletImg, 21, 59, bossObj.getX() + 220, bossObj.getY() + 130, 10, this));
-					GameUtils.gameObjList.add(GameUtils.littleBoss2BulletList.get(GameUtils.littleBoss2BulletList.size() - 1));
+					GameUtils.masterList.get(GameObjType.LITTLEBOSS2BULLET).add(new LittleBoss2Bullet(GameUtils.littleBoss2BulletImg, 21, 59, bossObj.getX() + 220, bossObj.getY() + 130, 10, this));
+					//GameUtils.masterList.get(GameObjType.LITTLEBOSS2BULLET).add(GameUtils.littleBoss2BulletList.get(GameUtils.littleBoss2BulletList.size() - 1));
 				}
-				GameUtils.bossBulletList.add(new BossBullet(GameUtils.bossBulletImg, 51, 72, bossObj.getX() + 70, bossObj.getY() + 100, 9, this));
-				GameUtils.gameObjList.add(GameUtils.bossBulletList.get(GameUtils.bossBulletList.size() - 1));
+				GameUtils.masterList.get(GameObjType.BOSSBULLET).add(new BossBullet(GameUtils.bossBulletImg, 51, 72, bossObj.getX() + 70, bossObj.getY() + 100, 9, this));
+				//GameUtils.masterList.get(GameObjType.BOSSBULLET).add(GameUtils.bossBulletList.get(GameUtils.bossBulletList.size() - 1));
 			}
 		}
-		if(count==1250&&(!GameUtils.gameObjList.contains(waringObj))){
-			GameUtils.gameObjList.add(waringObj);
+		if(count==1250&&(!GameUtils.masterList.get(GameObjType.WARN).contains(waringObj))){
+			GameUtils.masterList.get(GameObjType.WARN).add(waringObj);
 		}
 		if(count==1290){
-			GameUtils.removeList.add(waringObj);
+			GameUtils.masterList.get(GameObjType.WARN).remove(waringObj);
 		}
 	}
 

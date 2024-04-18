@@ -1,6 +1,7 @@
 package com.sxt.obj;
 
 import com.sxt.GameWin;
+import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
 
 import java.awt.*;
@@ -30,34 +31,16 @@ public class LittleBoss1 extends GameObj{
 		if(x>400){
 			speed=-1;
 		}
-		checkBossCollision();
+		checkBulletHitByType();
 	}
 
-	private void checkBossCollision() {
-		for(ShellObj shellObj: GameUtils.shellObjList){
-			if (shellObj.getRec().intersects(this.getRec())) {
-				damageBoss(1, shellObj);
-			}
-		}
-		for(DoubleShellObj doubleshellObj: GameUtils.doubleShellObjList){
-			if (doubleshellObj.getRec().intersects(this.getRec())) {
-				damageBoss(5, doubleshellObj);
-			}
-		}
-		for(TripleShellObj tripleshellObj: GameUtils.tripleShellObjList){
-			if (tripleshellObj.getRec().intersects(this.getRec())) {
-				damageBoss(10, tripleshellObj);
-			}
-		}
-	}
-
-	public void damageBoss(Integer dmg, GameObj bullet) {
+	@Override
+	public void damage(Integer dmg, GameObj bullet) {
 		health -= dmg;
-		GameUtils.removeList.add(bullet);
 		if (health <= 0) {
 			GiftObj giftObj=new GiftObj(this.x,this.y);
-			GameUtils.giftObjList.add(giftObj);
-			GameUtils.gameObjList.addAll(GameUtils.giftObjList);
+			GameUtils.masterList.get(GameObjType.GIFT).add(giftObj);
+//			GameUtils.masterList.get(GameObjType.GIFT).addAll(GameUtils.giftObjList);
 			explode(bullet);
 		}
 	}
