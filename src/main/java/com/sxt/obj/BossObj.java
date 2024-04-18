@@ -37,46 +37,7 @@ public class BossObj extends GameObj{
 			}
 		}
 
-		for(GameObj shellObj: GameUtils.masterList.get(GameObjType.SHELLOBJ)){
-			if(this.getRec().intersects(shellObj.getRec())&&health>0){
-				shellObj.explode(null);
-				GameUtils.masterList.get(GameObjType.SHELLOBJ).remove(shellObj);
-				health--;
-			} else if (this.getRec().intersects(shellObj.getRec())&&health<=0) {
-
-				explode(shellObj);
-				GameUtils.masterList.get(GameObjType.SHELLOBJ).remove(shellObj);
-				GameWin.state=4;
-				GameWin.score+=10;
-			}
-		}
-
-		for(GameObj doubleshellObj: GameUtils.masterList.get(GameObjType.DOUBLESHELLOBJ)){
-			if(this.getRec().intersects(doubleshellObj.getRec())&&health>0){
-				doubleshellObj.explode(null);
-				GameUtils.masterList.get(GameObjType.DOUBLESHELLOBJ).remove(doubleshellObj);
-				health--;
-			} else if (this.getRec().intersects(doubleshellObj.getRec())&&health<=0) {
-
-				explode(doubleshellObj);
-				GameWin.state=4;
-				GameWin.score+=10;
-			}
-		}
-
-		for(GameObj tripleshellObj: GameUtils.masterList.get(GameObjType.TRIPLESHELLOBJ)){
-			if(this.getRec().intersects(tripleshellObj.getRec())&&health>0){
-				tripleshellObj.explode(null);
-				GameUtils.masterList.get(GameObjType.SHELLOBJ).remove(tripleshellObj);
-				health--;
-			} else if (this.getRec().intersects(tripleshellObj.getRec())&&health<=0) {
-
-				explode(tripleshellObj);
-				GameUtils.masterList.get(GameObjType.BOSS).remove(this);
-				GameWin.state=4;
-				GameWin.score+=10;
-			}
-		}
+		checkBulletHitByType();
 
 		g.setColor(Color.WHITE);
 		g.fillRect(200,40,200,10);
@@ -84,6 +45,18 @@ public class BossObj extends GameObj{
 		g.setColor(Color.RED);
 		g.fillRect(200,40,health*200/30,10);
 	}
+
+	@Override
+	public void damage(Integer dmg, GameObj bullet) {
+		health--; //ignore dmg for boss
+		if (health <= 0) {
+			explode(bullet);
+			GameUtils.masterList.get(GameObjType.BOSS).remove(this);
+			GameWin.state=4;
+			GameWin.score+=10;
+		}
+	}
+
 
 	@Override
 	public Rectangle getRec() {

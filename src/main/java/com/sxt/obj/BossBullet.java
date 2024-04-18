@@ -28,12 +28,19 @@ public class BossBullet extends GameObj{
 		super.paintSelf(g);
 		y+=speed;
 		if(this.y>800){
-			GameUtils.masterList.get(GameObjType.BOSSBULLET).add(this);
+			GameUtils.masterList.get(GameObjType.BOSSBULLET).remove(this);
 		}
 	}
 
 	@Override
 	public Rectangle getRec() {
 		return super.getRec();
+	}
+
+	@Override
+	public void damage(Integer dmg, GameObj bullet) {
+		//Don't care about damage, rmeove them
+		this.explode(bullet);
+		GameUtils.masterList.get(GameObjType.BOSSBULLET).remove(this);
 	}
 }
