@@ -7,6 +7,7 @@ import com.sxt.utils.GameUtils;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class PlaneObj extends GameObj {
 	public PlaneObj() {
@@ -100,14 +101,18 @@ public class PlaneObj extends GameObj {
 				GameWin.state=3;
 			}
 		}
-
+		ArrayList<GameObj> toRemove = new ArrayList<>();
 		for (GameObj giftObj: GameUtils.masterList.get(GameObjType.GIFT)) {
 			if(this.getRec().intersects(giftObj.getRec())){
 				giftObj.setX(-100);
 				giftObj.setY(-100);
-				GameUtils.masterList.get(GameObjType.GIFT).remove(giftObj);
+				toRemove.add(giftObj);
 				times++;
 			}
+		}
+
+		for (GameObj obj: toRemove) {
+			GameUtils.masterList.get(GameObjType.GIFT).remove(obj);
 		}
 
 		for(GameObj bossBullet:GameUtils.masterList.get(GameObjType.BOSSBULLET)){

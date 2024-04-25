@@ -133,6 +133,10 @@ public class GameWin extends JFrame {
 			}
 			// Remove elements from the general collection
 			//GameUtils.gameObjList.removeAll(GameUtils.removeList);
+			//keep explode object list under control
+			if (GameUtils.masterList.get(GameObjType.EXPLODEOBJ).size() > 5) {
+				GameUtils.masterList.get(GameObjType.EXPLODEOBJ).remove(0);
+			}
 			count++;
 		}
 		if(state==2){
@@ -204,7 +208,7 @@ public class GameWin extends JFrame {
 		if(count==700&&(!GameUtils.masterList.get(GameObjType.LITTLEBOSS1).contains(littleBoss1))){
 			GameUtils.masterList.get(GameObjType.LITTLEBOSS1).add(littleBoss1);
 		}
-		if(count%15==0) {
+		if(count%45==0) {
 			if (GameUtils.masterList.get(GameObjType.LITTLEBOSS1).contains(littleBoss1)) {
 				GameUtils.masterList.get(GameObjType.LITTLEBOSS1BULLET).add(new LittleBoss1Bullet(GameUtils.littleBoss1BulletImg, 42, 42, littleBoss1.getX() + 75, littleBoss1.getY() + 100, 4, this));
 				//GameUtils.gameObjList.add(GameUtils.littleBoss1BulletList.get(GameUtils.littleBoss1BulletList.size() - 1));
@@ -212,7 +216,7 @@ public class GameWin extends JFrame {
 
 			}
 		}
-		if(count%40==0){
+		if(count%80==0){
 			if(GameUtils.masterList.get(GameObjType.LITTLEBOSS2).contains(littleBoss2)){
 				GameUtils.masterList.get(GameObjType.LITTLEBOSS2BULLET).add(new LittleBoss2Bullet(GameUtils.littleBoss2BulletImg,21,59,littleBoss2.getX()+78,littleBoss2.getY()+100,8,this));
 			//	GameUtils.masterList.get(GameObjType.LITTLEBOSS2BULLET).add(GameUtils.littleBoss2BulletList.get(GameUtils.littleBoss2BulletList.size()-1));
@@ -224,13 +228,17 @@ public class GameWin extends JFrame {
 
 		if(count%20==0) {
 			if (GameUtils.masterList.get(GameObjType.BOSS).contains(bossObj)) {
-				GameUtils.masterList.get(GameObjType.LITTLEBOSS1BULLET).add(new LittleBoss1Bullet(GameUtils.littleBoss1BulletImg, 42, 42, bossObj.getX() + 10, bossObj.getY() + 130, 6, this));
-				//GameUtils.masterList.get(GameObjType.LITTLEBOSS1BULLET).add(GameUtils.littleBoss1BulletList.get(GameUtils.littleBoss1BulletList.size() - 1));
 				if (count % 40 == 0) {
+					GameUtils.masterList.get(GameObjType.LITTLEBOSS1BULLET).add(new LittleBoss1Bullet(GameUtils.littleBoss1BulletImg, 42, 42, bossObj.getX() + 10, bossObj.getY() + 130, 6, this));
+				}
+				//GameUtils.masterList.get(GameObjType.LITTLEBOSS1BULLET).add(GameUtils.littleBoss1BulletList.get(GameUtils.littleBoss1BulletList.size() - 1));
+				if (count % 80 == 0) {
 					GameUtils.masterList.get(GameObjType.LITTLEBOSS2BULLET).add(new LittleBoss2Bullet(GameUtils.littleBoss2BulletImg, 21, 59, bossObj.getX() + 220, bossObj.getY() + 130, 10, this));
 					//GameUtils.masterList.get(GameObjType.LITTLEBOSS2BULLET).add(GameUtils.littleBoss2BulletList.get(GameUtils.littleBoss2BulletList.size() - 1));
 				}
-				GameUtils.masterList.get(GameObjType.BOSSBULLET).add(new BossBullet(GameUtils.bossBulletImg, 51, 72, bossObj.getX() + 70, bossObj.getY() + 100, 9, this));
+				if (count % 80 == 0) {
+					GameUtils.masterList.get(GameObjType.BOSSBULLET).add(new BossBullet(GameUtils.bossBulletImg, 51, 72, bossObj.getX() + 70, bossObj.getY() + 100, 9, this));
+				}
 				//GameUtils.masterList.get(GameObjType.BOSSBULLET).add(GameUtils.bossBulletList.get(GameUtils.bossBulletList.size() - 1));
 			}
 		}

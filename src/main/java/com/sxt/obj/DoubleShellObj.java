@@ -28,7 +28,7 @@ public class DoubleShellObj extends GameObj{
 		super.paintSelf(g);
 		y-=speed;
 		if(y<0){
-			GameUtils.masterList.get(GameObjType.DOUBLESHELLOBJ).add(this);
+			GameUtils.masterList.get(GameObjType.DOUBLESHELLOBJ).remove(this);
 		}
 	}
 

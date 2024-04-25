@@ -28,7 +28,7 @@ public class LittleBoss2Bullet extends GameObj{
 	public void paintSelf(Graphics g) {
 		super.paintSelf(g);
 		this.y+=speed;
-		this.x-=(this.x-GameUtils.masterList.get(GameObjType.PLANEOBJ).get(GameWin.planeindex).getX())/30;
+		this.x-=(this.x-GameUtils.masterList.get(GameObjType.PLANEOBJ).get(GameWin.planeindex).getX())/60;
 		checkBulletHitByType();
 		if(this.y>800){
 			GameUtils.masterList.get(GameObjType.LITTLEBOSS2BULLET).remove(this);
