@@ -10,6 +10,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameWin extends JFrame {
@@ -146,10 +149,14 @@ public class GameWin extends JFrame {
 		if(state==3){
 			gImage.drawImage(GameUtils.bdImg,0,0,null);
 			GameUtils.drawWord(gImage,"mission failed",Color.RED,30,220,300);
+			createLeaderboard(score);
+			System.exit(0);
 		}
 		if(state==4){
 			gImage.drawImage(GameUtils.bdImg,0,0,null);
 			GameUtils.drawWord(gImage,"mission success",Color.GREEN,30,220,300);
+			createLeaderboard(score);
+			System.exit(0);
 		}
 
 		GameUtils.drawWord(gImage,score+"score",Color.green,40,30,100);
@@ -247,6 +254,25 @@ public class GameWin extends JFrame {
 		}
 		if(count==1290){
 			GameUtils.masterList.get(GameObjType.WARN).remove(waringObj);
+		}
+	}
+
+	public void createLeaderboard(int score) {
+		File file = new File("leaderboard.txt");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		file.setWritable(true);
+		try {
+			FileWriter fileWriter = new FileWriter(file, true);
+			fileWriter.write(score + "\n");
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
