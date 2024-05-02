@@ -23,6 +23,10 @@ public class GameWin extends JFrame {
 	BgObj bgObj = new BgObj(GameUtils.bdImg, 0, -1800, 2);
 	// Define an image variable
 	Image offScreenImage = null;
+	long lastClickTime = System.nanoTime();
+	long currentTime = System.nanoTime();
+
+	int clickCount = 0;
 	// Object of our plane
 	PlaneObj planeObj = new PlaneObj(GameUtils.planeImg, 37, 41, 290, 550, 0, this);
 	// Object for our bullets
@@ -70,6 +74,16 @@ public class GameWin extends JFrame {
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				clickCount++;
+				currentTime = System.nanoTime();
+				if(currentTime - lastClickTime >= 1000000000){
+					clickCount = 0;
+				}else if(clickCount >= 2){
+					state = 5;
+					clickCount = 0;
+				}
+				lastClickTime = currentTime;
+
 				if (e.getButton() == 1 && state == 0) { // React only when the game is not started and left click is pressed
 					state = 1; // Start game state
 				}
@@ -90,7 +104,7 @@ public class GameWin extends JFrame {
 				if(e.getKeyCode()==32){
 					if(state==1){
 						state=2;
-					} else if (state==2) {
+					} else if (state==2 || state == 5) {
 						state=1;
 					}
 				}
@@ -167,6 +181,10 @@ public class GameWin extends JFrame {
 			GameUtils.drawWord(gImage,"mission success",Color.GREEN,30,220,300);
 			createLeaderboard(score);
 			System.exit(0);
+		}
+		if(state==5){
+			gImage.drawImage(GameUtils.bdImg,0,0,null);
+			GameUtils.drawWord(gImage,"Please do not click mouse button too often",Color.YELLOW,30,220,300);
 		}
 
 		GameUtils.drawWord(gImage,score+"score",Color.green,40,30,100);

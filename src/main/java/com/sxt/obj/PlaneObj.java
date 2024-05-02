@@ -75,7 +75,6 @@ public class PlaneObj extends GameObj {
 		}
 
 		if(this.getRec().intersects(littleBoss2.getRec())){
-			//绘制爆炸
 //			ExplodeObj explodeObj=new ExplodeObj(x,y);
 //			GameUtils.explodeObjList.add(explodeObj);
 //			GameUtils.removeList.add(explodeObj);
