@@ -47,6 +47,7 @@ public class GameWin extends JFrame {
 		this.setVisible(true);
 		// Window size
 		this.setSize(600, 800);
+		this.setResizable(false);
 		// Window position
 		this.setLocationRelativeTo(null);
 		// Window title
@@ -73,6 +74,14 @@ public class GameWin extends JFrame {
 					state = 1; // Start game state
 				}
 			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				//Automatically pause if not in game field
+				state = 2;
+			}
+
+
 		});
 
 		this.addKeyListener(new KeyAdapter() {
@@ -89,10 +98,10 @@ public class GameWin extends JFrame {
 		});
 
 		while (true) {
-			createObj();
-			repaint();
+				createObj();
+				repaint();
 			try {
-				Thread.sleep(25); // 25 milliseconds
+				Thread.sleep(25); // 25 milliseconds 60fps ~16ms (16.666...)
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -140,6 +149,7 @@ public class GameWin extends JFrame {
 			if (GameUtils.masterList.get(GameObjType.EXPLODEOBJ).size() > 5) {
 				GameUtils.masterList.get(GameObjType.EXPLODEOBJ).remove(0);
 			}
+
 			count++;
 		}
 		if(state==2){
