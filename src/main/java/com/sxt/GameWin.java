@@ -179,6 +179,9 @@ public class GameWin extends JFrame {
 
 	// This method is used to create objects in batches
 	void createObj() {
+		if (state != 1) {
+			return;
+		}
 		if (count % 15 == 0) { // Controls the speed of bullet generation
 			if (planeObj.times == 0) {
 				GameUtils.masterList.get(GameObjType.SHELLOBJ).add(new ShellObj(GameUtils.shellImg, 14, 29, planeObj.getX() + 12, planeObj.getY() - 20, 5, this));
