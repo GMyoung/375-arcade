@@ -43,8 +43,10 @@ public class LittleBoss2 extends GameObj{
 		if (health <= 0) {
 			GiftObj giftObj=new GiftObj(this.x,this.y);
 			GameUtils.masterList.get(GameObjType.GIFT).add(giftObj);
+
 	//		GameUtils.masterList.get(GameObjType.GIFT).addAll(GameUtils.giftObjList);
 			explode(bullet);
+			GameUtils.masterList.get(GameObjType.LITTLEBOSS2).remove(this);
 		}
 	}
 
