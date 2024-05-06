@@ -34,3 +34,9 @@ Z
 *src/main/java/com/sxt/obj/LittleBoss1.java,5\c\5c05fd1741f5db81b44b5f7a29e4a9a6f48e2934
 V
 &src/main/java/com/sxt/obj/GiftObj.java,3\e\3e46dd5a4509febfe4b1575cd81b0cdb6a7a7384
+\
+,src/test/java/obj/GameObjMasterListTest.java,e\9\e9577e47c92ebb46d13de6da9cccb3fc470d1d54
+b
+2src/main/java/com/sxt/utils/ObjectDestoryTest.java,8\c\8c279ee6792c1c42a7fa0f18edf9e22314be1409
+R
+"src/test/java/obj/DestoryTest.java,6\a\6a85bcdce8a36f6fe50ccb122f86b0823c76c5ce
