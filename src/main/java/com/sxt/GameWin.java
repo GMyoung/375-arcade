@@ -1,8 +1,10 @@
 package com.sxt;
 
+import com.opencsv.exceptions.CsvException;
 import com.sxt.obj.*;
 import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
+import com.sxt.utils.LeaderBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +43,8 @@ public class GameWin extends JFrame {
 	BossObj bossObj=new BossObj(GameUtils.bossImg,240,174,180,-180,3,this);
 
 	WaringObj waringObj=new WaringObj(GameUtils.warningImg,599,90,0,350,0,this);
+
+	LeaderBoard leaderBoard = new LeaderBoard();
 
 	public static int planeindex=0;
 
@@ -92,7 +96,9 @@ public class GameWin extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				//Automatically pause if not in game field
-				state = 2;
+				if (state == 1) {
+					state = 2;
+				}
 			}
 
 
@@ -173,6 +179,11 @@ public class GameWin extends JFrame {
 		if(state==3){
 			gImage.drawImage(GameUtils.bdImg,0,0,null);
 			GameUtils.drawWord(gImage,"mission failed",Color.RED,30,220,300);
+			try {
+				leaderBoard.addNewLeaderBoardEntry(score, "Testing");
+			} catch (IOException | CsvException e) {
+				throw new RuntimeException(e);
+			}
 			createLeaderboard(score);
 			System.exit(0);
 		}

@@ -134,7 +134,7 @@ public abstract class GameObj {
 //		GameUtils.masterList.get(GameObjType.Ga).add(playerShellObj);
 //	}
 
-	 	void checkBulletHitByType() {
+	void checkBulletHitByType() {
 		//Find shells for removal
 		ArrayList<GameObj> shellsToRemove = new ArrayList<>();
 		for(GameObj shellObj: GameUtils.masterList.get(GameObjType.SHELLOBJ)){
