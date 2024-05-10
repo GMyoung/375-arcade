@@ -1,10 +1,11 @@
 package com.sxt;
 
 import com.opencsv.exceptions.CsvException;
+import com.sxt.leaderboard.EndgameWindow;
 import com.sxt.obj.*;
 import com.sxt.utils.GameObjType;
 import com.sxt.utils.GameUtils;
-import com.sxt.utils.LeaderBoard;
+import com.sxt.leaderboard.LeaderBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,6 +51,8 @@ public class GameWin extends JFrame {
 
 	public static int score=0;
 
+	private EndgameWindow endgameWindow = null;
+
 	public void launch() {
 		// Window visibility
 		this.setVisible(true);
@@ -64,8 +67,10 @@ public class GameWin extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Add all objects to be drawn to the collection for drawing
 
+
+
 		//Create master map objects.
-		//Simply put, all cals to GamUtils.gamObjList... are now replaced
+		//Simply put, all calls to GamUtils.gamObjList... are now replaced
 		//with GameUtils.masteLits.get(GameObjectType.<Type>)...
 		for (GameObjType vals: GameObjType.values()) {
 			GameUtils.masterList.put(vals, new ArrayList<>());
@@ -131,6 +136,10 @@ public class GameWin extends JFrame {
 
 	@Override
 	public void paint(Graphics g) {
+
+
+
+
 		// Initialize off-screen image object
 		if (offScreenImage == null) {
 			offScreenImage = createImage(600, 800); // Size must be the same as the game window
@@ -179,30 +188,29 @@ public class GameWin extends JFrame {
 		if(state==3){
 			gImage.drawImage(GameUtils.bdImg,0,0,null);
 			GameUtils.drawWord(gImage,"mission failed",Color.RED,30,220,300);
-			try {
-				leaderBoard.addNewLeaderBoardEntry(score, "Testing");
-			} catch (IOException | CsvException e) {
-				throw new RuntimeException(e);
-			}
-			createLeaderboard(score);
-			System.exit(0);
+
 		}
 		if(state==4){
 			gImage.drawImage(GameUtils.bdImg,0,0,null);
 			GameUtils.drawWord(gImage,"mission success",Color.GREEN,30,220,300);
-			createLeaderboard(score);
-			System.exit(0);
+
 		}
 		if(state==5){
 			gImage.drawImage(GameUtils.bdImg,0,0,null);
 			GameUtils.drawWord(gImage,"Please do not click mouse button too often",Color.YELLOW,30,220,300);
 		}
 
+
 		GameUtils.drawWord(gImage,score+"score",Color.green,40,30,100);
 		// Draw the off-screen image onto the game window
 		g.drawImage(offScreenImage, 0, 0, null);
 
-		System.out.println(GameUtils.masterList.entrySet());
+		//open endgameWindow
+		if (state == 4 || state == 3) {
+			if (endgameWindow == null) {
+				endgameWindow = new EndgameWindow(this);
+			}
+		}
 
 	}
 
@@ -321,5 +329,27 @@ public class GameWin extends JFrame {
 	public static void main(String[] args) {
 		GameWin gameWin = new GameWin();
 		gameWin.launch();
+	}
+
+	public void restart() {
+		//Set count Zero
+		count = 0;
+
+		//Clear all of our fields.
+		GameUtils.masterList.clear();
+		for (GameObjType vals: GameObjType.values()) {
+			GameUtils.masterList.put(vals, new ArrayList<>());
+		}
+		GameUtils.masterList.get(GameObjType.BG).add(bgObj);
+		GameUtils.masterList.get(GameObjType.PLANEOBJ).add(planeObj);
+		planeindex=GameUtils.masterList.get(GameObjType.PLANEOBJ).indexOf(planeObj);
+
+		//reset score
+		score = 0;
+		//Set state to 0;
+		state = 0;
+
+		//nullify our EndGameWindow field
+		endgameWindow = null;
 	}
 }

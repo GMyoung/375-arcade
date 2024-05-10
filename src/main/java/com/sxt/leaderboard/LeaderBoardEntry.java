@@ -1,4 +1,4 @@
-package com.sxt.utils;
+package com.sxt.leaderboard;
 
 public class LeaderBoardEntry implements Comparable<LeaderBoardEntry> {
     //We need a sortable Object for processing our leaderboard,
@@ -23,6 +23,6 @@ public class LeaderBoardEntry implements Comparable<LeaderBoardEntry> {
 
     @Override
     public int compareTo(LeaderBoardEntry otherEntry) {
-        return Integer.compare(this.score, otherEntry.score);
+        return otherEntry.score - this.score;
     }
 }

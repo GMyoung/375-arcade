@@ -1,4 +1,4 @@
-package com.sxt.utils;
+package com.sxt.leaderboard;
 
 
 import com.opencsv.CSVReader;
@@ -12,10 +12,22 @@ import java.util.*;
 public class LeaderBoard {
     private static final String  COMMA_DELIMITER = ",";
 
+    public static String[] getLeaderBoardEntries() {
+        List<LeaderBoardEntry> currentBoard = getLeaderBoard();
+        List<String> entries = new ArrayList<>();
+
+        for (LeaderBoardEntry entry: currentBoard) {
+            entries.add(entry.getName() + ": " + entry.getScore());
+        }
+
+        return entries.toArray(new String[entries.size()]);
+
+    }
+
 
     //https://www.baeldung.com/java-csv-file-array
 
-    public List<LeaderBoardEntry> getLeaderBoard() {
+    public static List<LeaderBoardEntry> getLeaderBoard() {
         List<List<String>> records = new ArrayList<>();
 
         File f = new File("leaderboard.csv");
@@ -37,17 +49,18 @@ public class LeaderBoard {
         }
         ArrayList<LeaderBoardEntry> leaderBoardEntries = new ArrayList<>();
 
-        System.out.println(records);
-        records.remove(0);
+
         for(List<String> record : records) {
-            leaderBoardEntries.add(new LeaderBoardEntry(Integer.parseInt(record.get(0)), record.get(1)));
+            if (!record.get(0).equals("Name")) { //avoid first row.
+                leaderBoardEntries.add(new LeaderBoardEntry(Integer.parseInt(record.get(0)), record.get(1)));
+            }
         }
 
         return leaderBoardEntries;
     }
 
     //<<Score, Name>, <Score, Name>, <Score,Name> ... >
-    public void saveLeaderBoard(List<LeaderBoardEntry> leaderBoardEntries) throws IOException, CsvException {
+    public static void saveLeaderBoard(List<LeaderBoardEntry> leaderBoardEntries) throws IOException, CsvException {
         CSVWriter writer = new CSVWriter(new FileWriter("leaderboard.csv"));
 
         writer.writeNext(new String[]{"Name", "Score"});
@@ -59,7 +72,7 @@ public class LeaderBoard {
 
     }
 
-    public void addNewLeaderBoardEntry(Integer score, String name) throws IOException, CsvException {
+    public static void addNewLeaderBoardEntry(Integer score, String name) throws IOException, CsvException {
             //We're going to go ahead and:
             //Process the leader board.
             //Sort The leaderboard by List<String>[0] --> Score.
@@ -67,10 +80,11 @@ public class LeaderBoard {
             List<LeaderBoardEntry> leaderboard = getLeaderBoard();
             leaderboard.add(new LeaderBoardEntry(score, name));
             Collections.sort(leaderboard);
-            if (leaderboard.size() > 10) {
+
+            if (leaderboard.size() > 5) {
                 leaderboard.remove(leaderboard.size() - 1);
             }
-            
+            System.out.println(leaderboard);
             saveLeaderBoard(leaderboard);
     }
 }
