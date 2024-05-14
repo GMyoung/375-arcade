@@ -184,6 +184,7 @@ public class GameWin extends JFrame {
 		if(state==2){
 			gImage.drawImage(GameUtils.bdImg,0,0,null);
 			GameUtils.drawWord(gImage,"game pause",Color.YELLOW,30,220,300);
+			GameUtils.drawWord(gImage,"press space to resume the game",Color.YELLOW,30,220,330);
 		}
 		if(state==3){
 			gImage.drawImage(GameUtils.bdImg,0,0,null);
@@ -198,6 +199,7 @@ public class GameWin extends JFrame {
 		if(state==5){
 			gImage.drawImage(GameUtils.bdImg,0,0,null);
 			GameUtils.drawWord(gImage,"Please do not click mouse button too often",Color.YELLOW,30,220,300);
+			GameUtils.drawWord(gImage,"press space to resume the game",Color.YELLOW,30,220,330);
 		}
 
 
@@ -212,7 +214,7 @@ public class GameWin extends JFrame {
 			}
 		}
 
-	}
+    }
 
 	// This method is used to create objects in batches
 	void createObj() {
