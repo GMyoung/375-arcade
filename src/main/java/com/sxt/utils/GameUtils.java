@@ -9,36 +9,36 @@ import java.util.List;
 // This class serves as the parent class for game elements
 public class GameUtils {
 	// Load background image
-	public static Image bdImg = Toolkit.getDefaultToolkit().getImage("imgs/bg.jpg");
+	public static Image bdImg = Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/bg.jpg"));
 	// Load boss image
-	public static Image bossImg = Toolkit.getDefaultToolkit().getImage("imgs/boss.png");
+	public static Image bossImg = Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/boss.png"));
 	// Load explosion image
-	public static Image explodeImg = Toolkit.getDefaultToolkit().getImage("imgs/explode/e6.gif");
+	public static Image explodeImg = Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/explode/e6.gif"));
 	// Load our plane image
-	public static Image planeImg = Toolkit.getDefaultToolkit().getImage("imgs/plane.png");
+	public static Image planeImg = Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/plane.png"));
 	// Load our plane bullet image
-	public static Image shellImg = Toolkit.getDefaultToolkit().getImage("imgs/shell.png");
+	public static Image shellImg = Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/shell.png"));
 	// Load enemy small plane image
-	public static Image enemy1Img = Toolkit.getDefaultToolkit().getImage("imgs/enemy1.png");
+	public static Image enemy1Img = Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/enemy1.png"));
 	// Load enemy big plane image
-	public static Image enemy2Img = Toolkit.getDefaultToolkit().getImage("imgs/enemy2.png");
+	public static Image enemy2Img = Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/enemy2.png"));
 	// Load enemy big plane bullet image
-	public static Image enemy2BulletImg = Toolkit.getDefaultToolkit().getImage("imgs/enemy2bullet.png");
+	public static Image enemy2BulletImg = Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/enemy2bullet.png"));
 
 
-	public static Image littleboss1Img= Toolkit.getDefaultToolkit().getImage("imgs/littleboss1.png");
-	public static Image littleboss2Img= Toolkit.getDefaultToolkit().getImage("imgs/littleboss2.png");
-	public static Image littleBoss1BulletImg= Toolkit.getDefaultToolkit().getImage("imgs/littleboss1bullet.png");
-	public static Image littleBoss2BulletImg= Toolkit.getDefaultToolkit().getImage("imgs/littleboss2bullet.png");
-	public static Image giftImg= Toolkit.getDefaultToolkit().getImage("imgs/gift.png");
+	public static Image littleboss1Img= Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/littleboss1.png"));
+	public static Image littleboss2Img= Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/littleboss2.png"));
+	public static Image littleBoss1BulletImg= Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/littleboss1bullet.png"));
+	public static Image littleBoss2BulletImg= Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/littleboss2bullet.png"));
+	public static Image giftImg= Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/gift.png"));
 
-	public static Image doubleShellImg= Toolkit.getDefaultToolkit().getImage("imgs/doubleshell.png");
+	public static Image doubleShellImg= Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/doubleshell.png"));
 
-	public static Image tripleShellImg= Toolkit.getDefaultToolkit().getImage("imgs/tripleshell.png");
+	public static Image tripleShellImg= Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/tripleshell.png"));
 
-	public static Image bossBulletImg= Toolkit.getDefaultToolkit().getImage("imgs/bossbullet.png");
+	public static Image bossBulletImg= Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/bossbullet.png"));
 
-	public static Image warningImg= Toolkit.getDefaultToolkit().getImage("imgs/warning.gif");
+	public static Image warningImg= Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/warning.gif"));
 
 
 	//All commented lists are consolidated to this master list at runtime.

@@ -1,5 +1,7 @@
 package com.sxt.obj;
 
+import com.sxt.utils.GameUtils;
+
 import java.awt.*;
 
 public class ExplodeObj extends GameObj{
@@ -10,7 +12,7 @@ public class ExplodeObj extends GameObj{
 	// Define a static block to load the explosion images into the array
 	static {
 		for (int i = 0; i < explodePic.length; i++) {
-			explodePic[i] = Toolkit.getDefaultToolkit().getImage("imgs/explode/e" + (i + 1) + ".gif");
+			explodePic[i] = Toolkit.getDefaultToolkit().createImage(GameUtils.class.getResource("/imgs/explode/e" + (i + 1) + ".gif"));
 		}
 	}
 

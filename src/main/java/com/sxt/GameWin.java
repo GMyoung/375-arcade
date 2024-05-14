@@ -340,6 +340,7 @@ public class GameWin extends JFrame {
 		for (GameObjType vals: GameObjType.values()) {
 			GameUtils.masterList.put(vals, new ArrayList<>());
 		}
+
 		GameUtils.masterList.get(GameObjType.BG).add(bgObj);
 		GameUtils.masterList.get(GameObjType.PLANEOBJ).add(planeObj);
 		planeindex=GameUtils.masterList.get(GameObjType.PLANEOBJ).indexOf(planeObj);
@@ -348,6 +349,16 @@ public class GameWin extends JFrame {
 		score = 0;
 		//Set state to 0;
 		state = 0;
+
+		//reset bullets
+		planeObj.times = 0;
+
+		//Reset Boss Spawn
+		littleBoss1=new LittleBoss1(GameUtils.littleboss1Img,172,112,-200,350,3,this);
+
+		littleBoss2=new LittleBoss2(GameUtils.littleboss2Img,172,112,300,-150,2,this);
+
+		bossObj=new BossObj(GameUtils.bossImg,240,174,180,-180,3,this);
 
 		//nullify our EndGameWindow field
 		endgameWindow = null;
